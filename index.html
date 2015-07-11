@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular.min.js"></script>
+    
+    <!--link to other local files-->
+    <script src="app.js"></script>
+    <link href="main.css" rel="stylesheet" type="text/css" />
+    
+    <!--meta data-->
+    <meta charset="utf-8">
+    <meta api="spotify">
+    
+    <title>Spotify Challenge</title>
+  </head>
+  
+  <body>
+    <!--app and controller-->
+    <div ng-app="app" ng-controller="ctrl">
+      
+      <form name="songForm">
+        <div class="container form-group">
+          <label id="intro">Spotify search:</label>
+          
+          <div class="row">
+
+            <div class="col-sm-8">
+              <!--variable is binded to input-->
+              <input 
+                name="search" 
+                ng-minlength=3 
+                placeholder="choose search type in dropdown menu" 
+                ng-model="track" 
+                class="form-control" 
+                required>
+              </input>
+              <p class="help-block" ng-show="songForm.search.$error.minlength">enter 3+ characters</p>
+            </div>
+            
+            <div class="col-sm-2">
+              <select name="searchBy" class="form-control">
+                <option value="track" selected="selected">Track</option>
+                <option value="artist">Artists</option>
+              </select>  
+            </div>
+            
+            <div class="col-sm-2">
+            <!--search button runs getSongs()-->
+              <div class="form-group">
+                <button 
+                  ng-disabled="songForm.search.$invalid ? songForm.search.$pristine : false" 
+                  class="btn btn-primary" 
+                  ng-click="getSongs()" 
+                  type="submit">
+                  Search
+                </button>
+              </div>
+            </div>
+
+          </div>
+          
+        </div>
+        
+      </form>
+
+
+      <div class="container">
+        <p ng-show="tracks.length > 0" class="help-block">Click to sample track</p>
+        
+        <div 
+          name="bytrack"
+          ng-class="trk.preview_url == currentSong ? 'playing' : 'default'"  
+          ng-repeat="trk in tracks" 
+          class="col-sm-3 img">
+          <img 
+            ng-click="play(trk.preview_url)" 
+            title="{{trk.name}}" 
+            src="{{trk.album.images[1].url}}">
+          </img>
+        </div>
+      </div>
+    </div>
+
+
+  </body>
+
+</html>

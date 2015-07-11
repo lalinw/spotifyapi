@@ -1,0 +1,35 @@
+body {
+  margin: 20px;
+  padding: 10px;
+  background-color: #292929;
+}
+
+.img {
+  margin-bottom:20px;
+  padding:10px; 
+  text-align:center;
+  box-sizing:border-box;
+}
+
+img {
+  max-height:100%;
+  max-width:100%;
+  cursor:pointer;
+}
+.container   {
+  width:90%;
+  margin-left:5%;
+}
+
+.playing {
+  -webkit-filter: invert(0.8);
+  transition: all 500ms ease-in-out;
+}
+
+.default {
+  transition: all 500ms ease-in-out;
+}
+
+#intro {
+  color: white;
+}
