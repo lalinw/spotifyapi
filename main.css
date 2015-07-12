@@ -16,7 +16,7 @@ img {
   max-width:100%;
   cursor:pointer;
 }
-.container   {
+.container  {
   width:90%;
   margin-left:5%;
 }
@@ -33,3 +33,8 @@ img {
 #intro {
   color: white;
 }
+
+.descr {
+  display: none;
+}
+

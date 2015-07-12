@@ -20,7 +20,7 @@
   <body>
     <!--app and controller-->
     <div ng-app="app" ng-controller="ctrl">
-      
+
       <form name="songForm">
         <div class="container form-group">
           <label id="intro">Spotify search:</label>
@@ -30,35 +30,35 @@
             <div class="col-sm-8">
               <!--variable is binded to input-->
               <input 
-                name="search" 
+                name="searchBar" 
                 ng-minlength=3 
                 placeholder="choose search type in dropdown menu" 
-                ng-model="track" 
+                ng-model="search" 
                 class="form-control" 
                 required>
               </input>
-              <p class="help-block" ng-show="songForm.search.$error.minlength">enter 3+ characters</p>
+              <p class="help-block" ng-show="songForm.searchBar.$error.minlength">enter 3+ characters</p>
             </div>
             
+            <!--dropdown menu to change search type-->
             <div class="col-sm-2">
-              <select name="searchBy" class="form-control">
-                <option value="track" selected="selected">Track</option>
-                <option value="artist">Artists</option>
+              <select name="searchType" class="form-control" ng-model="searchType" ng-change="changed()" required>
+                <option value="track" selected>Track</option>
+                <option value="artist">Artist</option>
               </select>  
             </div>
-            
-            <div class="col-sm-2">
-            <!--search button runs getSongs()-->
-              <div class="form-group">
-                <button 
-                  ng-disabled="songForm.search.$invalid ? songForm.search.$pristine : false" 
-                  class="btn btn-primary" 
-                  ng-click="getSongs()" 
-                  type="submit">
-                  Search
-                </button>
-              </div>
+
+            <!--search button calls getResults()-->
+            <div class="form-group col-sm-2">
+              <button 
+                ng-disabled="songForm.searchBar.$invalid" 
+                class="btn btn-primary" 
+                ng-click="getResults()" 
+                type="submit">
+                Search
+              </button>
             </div>
+            
 
           </div>
           
@@ -67,24 +67,101 @@
       </form>
 
 
-      <div class="container">
-        <p ng-show="tracks.length > 0" class="help-block">Click to sample track</p>
+      <div class="container" ng-show="searchType == 'track'">
+        <p ng-show="results.length > 0" class="help-block">Click image to preview track</p>
+        <p ng-show="results.length == 0" class="help-block">There are no results to display</p>
         
+        <!--show tracks with album covers-->
+        <div class="row">
         <div 
-          name="bytrack"
           ng-class="trk.preview_url == currentSong ? 'playing' : 'default'"  
-          ng-repeat="trk in tracks" 
+          ng-repeat="trk in results" 
           class="col-sm-3 img">
           <img 
             ng-click="play(trk.preview_url)" 
-            title="{{trk.name}}" 
-            src="{{trk.album.images[1].url}}">
+            title="{{trk.name}}"
+            src="{{trk.album.images[0].url}}">
           </img>
+          
         </div>
       </div>
+
+      
+
+      <div class="container" ng-hide="searchType == 'track'">
+        <p ng-show="results.length > 0" class="help-block">Click on top track names to preview track</p>
+        <p ng-show="results.length == 0" class="help-block">There are no results to display</p>
+        <!--show artists with info and sample songs-->
+        
+        <div name="artist-items">
+          <table>
+            <tr ng-repeat="artist in results">
+              <td class="img col-sm-4">
+                <img 
+                  ng-click="" 
+                  title="{{artist.name}}" 
+                  src="{{artist.images[0].url}}">
+                </img>
+              </td>
+              <td class="col-sm-4">
+                Name: {{artist.name}}<br/>
+                Followers: {{artist.followers.total}}<br/>
+                Popularity: {{artist.popularity}}<br/>
+                See albums**
+              </td>
+              <td class="col-sm-4">
+                <h4>Top Tracks:</h4> 
+                  <!--
+                  <ul>
+                    <li ng-repeat="artist in results">
+                      <text ng-click="play(id of artist)">"{{tracks.album.external_urls.name}}"</text>, {{tracks.album.name}}
+                    </li>
+                  </ul>
+            -->
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+<!--
+        <div class="row">
+          <div name="artist-items" ng-repeat="artist in results" >
+            <div
+              class="col-sm-4 img">
+              <img 
+                ng-click="getAlbums(artist.items.id)" 
+                title="{{artist.name}}" 
+                src="{{artist.images[0].url}}">
+              </img>
+            </div>
+            <div 
+              name="artist-descr"
+              class="col-sm-4"
+              ng-class="descr-block">
+              Name: {{artist.items.name}}<br/>
+              Followers: {{artist.items.followers.total}}<br/>
+              Popularity: {{artist.items.popularity}}<br/>
+              See albums**
+            </div>
+
+              <!--this third column calls getTopTracks(artistId) and displays all top track from that artist (new data array requested for every artist)
+            <div
+              name="top-tracks"
+              class="col-sm-4"
+              ng-class"track-list">
+              <h4>Top Tracks:</h4> 
+              <!--
+              <ul>
+                <li ng-repeat="artist in results">
+                  <text ng-click="play(id of artist)">"{{tracks.album.external_urls.name}}"</text>, {{tracks.album.name}}
+                </li>
+              </ul>
+            
+            </div>
+          -->
+          </div>
+        
     </div>
-
-
   </body>
 
 </html>
