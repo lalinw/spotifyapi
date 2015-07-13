@@ -79,14 +79,14 @@
 
 
       <div class="container" ng-show="{{searchType}} == 'track'">
-        <p ng-show="results.length > 0" class="help-block">Click image to preview track</p>
-        <p ng-show="results.length == 0" class="help-block">There are no results to display</p>
+        <p ng-show="results1.length > 0" class="help-block">Click image to preview track</p>
+        <p ng-show="results1.length == 0" class="help-block">There are no results to display</p>
         
         <!--show tracks with album covers-->
         <div class="row">
         <div 
           ng-class="trk.preview_url == currentSong ? 'playing' : 'default'"  
-          ng-repeat="trk in results" 
+          ng-repeat="trk in results1" 
           class="col-sm-3 img">
           <img 
             ng-click="play(trk.preview_url)" 
@@ -100,13 +100,13 @@
       
 
       <div ng-hide="{{searchType}} == 'track'">
-        <p ng-show="results.length > 0" class="help-block">Click on top track names to preview track</p>
-        <p ng-show="results.length == 0" class="help-block">There are no results to display</p>
+        <p ng-show="results2.length > 0" class="help-block">Click on top track names to preview track</p>
+        <p ng-show="results2.length == 0" class="help-block">There are no results to display</p>
         <!--show artists with info and sample songs-->
         
         <div name="container artist-items">
             <table>
-              <tbody ng-repeat="artist in results"> 
+              <tbody ng-repeat="artist in results2"> 
                 <tr class="row">
                   <td class="col-sm-4">
                     <img 
@@ -123,13 +123,11 @@
                   </td>
                   <td class="col-sm-4">
                     <h3 class="title">Top Tracks:</h3> 
-                      <!--
-                      <ul>
-                        <li ng-repeat="artist in results">
-                          <text ng-click="play(id of artist)">"{{tracks.album.external_urls.name}}"</text>, {{tracks.album.name}}
-                        </li>
+                      
+                      <ul ng-init="getTopTracks(artist.id)">
+                        <li ng-repeat="tt in toptracks" ng-click="play(tt.preview_url)">"{{tt.name}}"</text>, {{tt.album.name}}</li>
                       </ul>
-                -->
+                
                   </td>
                 </tr>
               </tbody>
