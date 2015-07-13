@@ -5,6 +5,10 @@ h1, h2, h3, h4, p, label, li {
   color: white;
 }
 
+li:hover {
+  color: #CCCCCC;
+}
+
 .info {
   color: #CCFF66;
 }
@@ -39,6 +43,7 @@ img {
 .playing {
   -webkit-filter: invert(0.8);
   transition: all 500ms ease-in-out;
+  color: #FF7519;
 }
 
 .default {
@@ -52,7 +57,7 @@ img {
 
 p.bar {
   text-align: center;
-  vertical-align: middle;
+  vertical-align: middle !important;
 }
 
 td {
