@@ -23,11 +23,26 @@
 
       <form name="songForm">
         <div class="container form-group">
-          <label id="intro">Spotify search:</label>
+          <label id="intro">Your Spotify</label>
           
           <div class="row">
+            <div class="col-sm-1">
+              <p class="bar">Search</p>
+            </div>
+            <div class="col-sm-2">
+              <!--dropdown menu to change search type-->
+              <select name="searchType" class="form-control" ng-model="searchType" ng-change="changed()" required>
+                <option value="track" selected>Track</option>
+                <option value="artist">Artist</option>
+              </select>  
 
-            <div class="col-sm-8">
+            </div>
+
+            <div class="col-sm-1">
+              <p class="bar">by<p>
+            </div>
+
+            <div class="col-sm-6">
               <!--variable is binded to input-->
               <input 
                 name="searchBar" 
@@ -40,13 +55,8 @@
               <p class="help-block" ng-show="songForm.searchBar.$error.minlength">enter 3+ characters</p>
             </div>
             
-            <!--dropdown menu to change search type-->
-            <div class="col-sm-2">
-              <select name="searchType" class="form-control" ng-model="searchType" ng-change="changed()" required>
-                <option value="track" selected>Track</option>
-                <option value="artist">Artist</option>
-              </select>  
-            </div>
+            
+            
 
             <!--search button calls getResults()-->
             <div class="form-group col-sm-2">
@@ -67,7 +77,8 @@
       </form>
 
 
-      <div class="container" ng-show="searchType == 'track'">
+
+      <div class="container" ng-show="{{searchType}} == 'track'">
         <p ng-show="results.length > 0" class="help-block">Click image to preview track</p>
         <p ng-show="results.length == 0" class="help-block">There are no results to display</p>
         
@@ -88,39 +99,42 @@
 
       
 
-      <div class="container" ng-hide="searchType == 'track'">
+      <div ng-hide="{{searchType}} == 'track'">
         <p ng-show="results.length > 0" class="help-block">Click on top track names to preview track</p>
         <p ng-show="results.length == 0" class="help-block">There are no results to display</p>
         <!--show artists with info and sample songs-->
         
-        <div name="artist-items">
-          <table>
-            <tr ng-repeat="artist in results">
-              <td class="img col-sm-4">
-                <img 
-                  ng-click="" 
-                  title="{{artist.name}}" 
-                  src="{{artist.images[0].url}}">
-                </img>
-              </td>
-              <td class="col-sm-4">
-                Name: {{artist.name}}<br/>
-                Followers: {{artist.followers.total}}<br/>
-                Popularity: {{artist.popularity}}<br/>
-                See albums**
-              </td>
-              <td class="col-sm-4">
-                <h4>Top Tracks:</h4> 
-                  <!--
-                  <ul>
-                    <li ng-repeat="artist in results">
-                      <text ng-click="play(id of artist)">"{{tracks.album.external_urls.name}}"</text>, {{tracks.album.name}}
-                    </li>
-                  </ul>
-            -->
-              </td>
-            </tr>
+        <div name="container artist-items">
+            <table>
+              <tbody ng-repeat="artist in results"> 
+                <tr class="row">
+                  <td class="col-sm-4">
+                    <img 
+                      ng-click="" 
+                      title="{{artist.name}}" 
+                      src="{{artist.images[0].url != null ? artist.images[0].url : 'blank.png'}}">
+                    </img>
+                  </td>
+                  <td class="col-sm-4">
+                    <h3 class="title">Artist Information</h3>
+                    <h4><b>Name:</b> <text class="info">{{artist.name}}</text></h4>
+                    <h4><b>Followers:</b> <text class="info">{{artist.followers.total}}</text></h4>
+                    <h4><b>Popularity:</b> <text class="info">{{artist.popularity}}</text></h4>
+                  </td>
+                  <td class="col-sm-4">
+                    <h3 class="title">Top Tracks:</h3> 
+                      <!--
+                      <ul>
+                        <li ng-repeat="artist in results">
+                          <text ng-click="play(id of artist)">"{{tracks.album.external_urls.name}}"</text>, {{tracks.album.name}}
+                        </li>
+                      </ul>
+                -->
+                  </td>
+                </tr>
+              </tbody>
           </table>
+          
         </div>
       </div>
 <!--

@@ -42,9 +42,9 @@ var ctrl = app.controller('ctrl', function($scope, $http) {
     $scope.results = null;
   }
 
-  $scope.getTopTracks = function(artistId) {
-    $scope.url = 'https://api.spotify.com/v1/artists/' + artistId + '/top-tracks?country=US'
-    $http.get($scope.url).success(function(response){
+  $scope.getTopTracks = function(id) {
+    url = 'https://api.spotify.com/v1/artists/' + id + '/top-tracks?country=US'
+    $http.get(url).success(function(response){
       toptracks = $scope.toptracks = response.tracks;
     })
   }

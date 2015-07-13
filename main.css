@@ -1,3 +1,18 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway:300);
+
+h1, h2, h3, h4, p, label {
+  font-family: 'Raleway', 'Helvetica Neue', Helvetica, sans-serif;
+  color: white;
+}
+
+.info {
+  color: #CCFF66;
+}
+
+.title {
+  color: #CCCCCC;
+}
+
 body {
   margin: 20px;
   padding: 10px;
@@ -34,7 +49,13 @@ img {
   color: white;
 }
 
-.descr {
-  display: none;
+
+p.bar {
+  text-align: center;
+  vertical-align: middle;
 }
 
+td {
+  padding: 20px;
+  vertical-align: top;
+}
