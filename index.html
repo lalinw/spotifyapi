@@ -23,12 +23,14 @@
 
       <form name="songForm">
         <div class="container form-group">
-          <label id="intro">Your Spotify</label>
-          
+          <h2 id="intro">Your Spotify</h2>
           <div class="row">
             <div class="col-sm-1">
               <p class="bar">Search</p>
             </div>
+
+
+
             <div class="col-sm-2">
               <!--dropdown menu to change search type-->
               <select name="searchType" class="form-control" ng-model="searchType" ng-change="changed()" required>
@@ -71,108 +73,70 @@
             
 
           </div>
-          
         </div>
-        
       </form>
 
 
 
       <div class="container" ng-show="{{searchType}} == 'track'">
-        <p ng-show="results1.length > 0" class="help-block">Click image to preview track</p>
+        <p ng-show="results1.length > 0" class="help-block">Click image to preview track.</p>
         <p ng-show="results1.length == 0" class="help-block">There are no results to display</p>
         
         <!--show tracks with album covers-->
         <div class="row">
-        <div 
-          ng-class="trk.preview_url == currentSong ? 'playing' : 'default'"  
-          ng-repeat="trk in results1" 
-          class="col-sm-3 img">
-          <img 
-            ng-click="play(trk.preview_url)" 
-            title="{{trk.name}}"
-            src="{{trk.album.images[0].url}}">
-          </img>
-          
+          <div 
+            ng-class="trk.preview_url == currentSong ? 'playing' : 'default'"  
+            ng-repeat="trk in results1" 
+            class="col-sm-3 img">
+            <img 
+              ng-click="play(trk.preview_url)" 
+              title="{{trk.name}}"
+              src="{{trk.album.images[0].url}}">
+            </img>
+            
+          </div>
         </div>
       </div>
 
       
 
       <div ng-hide="{{searchType}} == 'track'">
-        <p ng-show="results2.length > 0" class="help-block">Click on top track names to preview track</p>
+        <p ng-show="results2.length > 0" class="help-block">Click on top track names to preview track.</p>
         <p ng-show="results2.length == 0" class="help-block">There are no results to display</p>
         <!--show artists with info and sample songs-->
         
         <div name="container artist-items">
-            <table>
-              <tbody ng-repeat="artist in results2"> 
-                <tr class="row">
-                  <td class="col-sm-4">
-                    <img 
-                      ng-click="" 
-                      title="{{artist.name}}" 
-                      src="{{artist.images[0].url != null ? artist.images[0].url : 'blank.png'}}">
-                    </img>
-                  </td>
-                  <td class="col-sm-4">
-                    <h3 class="title">Artist Information</h3>
-                    <h4><b>Name:</b> <text class="info">{{artist.name}}</text></h4>
-                    <h4><b>Followers:</b> <text class="info">{{artist.followers.total}}</text></h4>
-                    <h4><b>Popularity:</b> <text class="info">{{artist.popularity}}</text></h4>
-                  </td>
-                  <td class="col-sm-4">
-                    <h3 class="title">Top Tracks:</h3> 
-                      
-                      <ul ng-init="getTopTracks(artist.id)">
-                        <li ng-repeat="tt in toptracks" ng-click="play(tt.preview_url)">"{{tt.name}}"</text>, {{tt.album.name}}</li>
-                      </ul>
-                
-                  </td>
-                </tr>
-              </tbody>
+          <table>
+            <tbody ng-repeat="artist in results2"> 
+              <tr class="row">
+                <td class="col-sm-4">
+                  <img 
+                    ng-click="" 
+                    title="{{artist.name}}" 
+                    src="{{artist.images[0].url != null ? artist.images[0].url : 'blank.png'}}">
+                  </img>
+                </td>
+                <td class="col-sm-4">
+                  <h3 class="title">Artist Information</h3>
+                  <h4><b>Name:</b> <text class="info">{{artist.name}}</text></h4>
+                  <h4><b>Followers:</b> <text class="info">{{artist.followers.total}}</text></h4>
+                  <h4><b>Popularity:</b> <text class="info">{{artist.popularity}}</text></h4>
+                </td>
+                <td class="col-sm-4">
+                  <h3 class="title">Top Tracks:</h3> 
+                    
+                    <ul ng-init="getTopTracks(artist.id)">
+                      <li ng-repeat="tt in top | filter: artist.name" ng-click="play(tt.preview_url)" ng-class="tt.preview_url == currentSong ? 'playing' : 'default'">"{{tt.name}}", {{tt.album}}</li>
+                    </ul>
+              
+                </td>
+              </tr>
+            </tbody>
           </table>
-          
-        </div>
-      </div>
-<!--
-        <div class="row">
-          <div name="artist-items" ng-repeat="artist in results" >
-            <div
-              class="col-sm-4 img">
-              <img 
-                ng-click="getAlbums(artist.items.id)" 
-                title="{{artist.name}}" 
-                src="{{artist.images[0].url}}">
-              </img>
-            </div>
-            <div 
-              name="artist-descr"
-              class="col-sm-4"
-              ng-class="descr-block">
-              Name: {{artist.items.name}}<br/>
-              Followers: {{artist.items.followers.total}}<br/>
-              Popularity: {{artist.items.popularity}}<br/>
-              See albums**
-            </div>
+        </div> 
+      </div>   
 
-              <!--this third column calls getTopTracks(artistId) and displays all top track from that artist (new data array requested for every artist)
-            <div
-              name="top-tracks"
-              class="col-sm-4"
-              ng-class"track-list">
-              <h4>Top Tracks:</h4> 
-              <!--
-              <ul>
-                <li ng-repeat="artist in results">
-                  <text ng-click="play(id of artist)">"{{tracks.album.external_urls.name}}"</text>, {{tracks.album.name}}
-                </li>
-              </ul>
-            
-            </div>
-          -->
-          </div>
-        
+
     </div>
   </body>
 
