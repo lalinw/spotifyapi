@@ -1,7 +1,7 @@
 var url;
 var app = angular.module('app', [])
 var topT = [];
-var sth;
+var tts;
 
 var ctrl = app.controller('ctrl', function($scope, $http) {
   $scope.audioObject = {};
@@ -37,57 +37,28 @@ var ctrl = app.controller('ctrl', function($scope, $http) {
   $scope.changed = function(){
     $scope.results1 = null;
     $scope.results2 = null;
-    topT = null;
+    topT = [];
   }
 
-  var ttObj = {};
+
   $scope.getTopTracks = function(id) {
-    url = 'https://api.spotify.com/v1/artists/' + id + '/top-tracks?country=US'
+    url = 'https://api.spotify.com/v1/artists/' + id + '/top-tracks?country=US';
     $http.get(url).success(function(response){
       $scope.toptracks = response.tracks;
-    })
-    // //topT.push($scope.toptracks);
-    // var sth = new ttObj($scope.toptracks);
-    alert($scope.toptracks);
+      angular.forEach($scope.toptracks, function(d, i){
+        tts = $scope.obj = {};
+        $scope.obj.name = d.name;
+        $scope.obj.preview_url = d.preview_url;
+        $scope.obj.album = d.album.name;
+        topT.push(tts);
+      })      
+    });
+    $scope.top = topT;
   }
-
-
-
-
-
-
 })
+
 
 // Add tool tips to anything with a title property
 $('body').tooltip({
     selector: '[title]'
 });
-
-//shows info on hover
-
-
-
-/*
-sources---
-get an artist's top tracks
-  https://api.spotify.com/v1/artists/{id}/top-tracks?country=US
-  OR 
-  artists.items.href + '/top-tracks?country=US'
-  can get id by...
-  (using the artists search) artists.items.id
-get artist image..
-  artists.items.images[2].url
-artists.items.followers.total
-artists.items.name
-artists.items.popularity
-
-top tracks
-(search top tracks--off search bar)
-album name-- tracks.album.name
-track name-- tracks.album.external_urls.name
-track preview-- tracks.album.external_urls.preview_url
-
-
-
-
-*/
