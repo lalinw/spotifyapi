@@ -75,3 +75,4 @@ app.filter('filtertt', function() {
 $('body').tooltip({
     selector: '[title]'
 });
+

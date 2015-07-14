@@ -101,7 +101,7 @@
       
 
       <div ng-hide="{{searchType}} == 'track'">
-        <p ng-show="results2.length > 0" class="help-block">Click on top track names to preview track.</p>
+        <p ng-show="results2.length > 0" class="help-block">Click on top track names to preview track.<br/>Click on artist image to see artist page.</p>
         <p ng-show="results2.length == 0" class="help-block">There are no results to display</p>
         <!--show artists with info and sample songs-->
         
@@ -110,11 +110,13 @@
             <tbody ng-repeat="artist in results2"> 
               <tr class="row">
                 <td class="col-sm-4">
-                  <img 
-                    ng-click="" 
-                    title="{{artist.name}}" 
-                    src="{{artist.images[0].url != null ? artist.images[0].url : 'blank.png'}}">
-                  </img>
+                  <a href="{{artist.external_urls.spotify}}">
+                    <img 
+                      ng-click="" 
+                      title="{{artist.name}}" 
+                      src="{{artist.images[0].url != null ? artist.images[0].url : 'blank.png'}}">
+                    </img>
+                  </a>
                 </td>
                 <td class="col-sm-4">
                   <h3 class="title">Artist Information</h3>
