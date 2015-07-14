@@ -33,7 +33,7 @@
 
             <div class="col-sm-2">
               <!--dropdown menu to change search type-->
-              <select name="searchType" class="form-control" ng-model="searchType" ng-change="changed()" required>
+              <select name="searchType" class="form-control" ng-model="searchType" required>
                 <option value="track" selected>Track</option>
                 <option value="artist">Artist</option>
               </select>  
@@ -126,7 +126,8 @@
                   <h3 class="title">Top Tracks:</h3> 
                     
                     <ul ng-init="getTopTracks(artist.id)">
-                      <li ng-repeat="tt in top | filter: artist.name" ng-click="play(tt.preview_url)" ng-class="tt.preview_url == currentSong ? 'playing' : 'default'">"{{tt.name}}", {{tt.album}}</li>
+                      <li ng-repeat="tt in top | filter:artist.id" ng-click="play(tt.preview_url)" ng-class="tt.preview_url == currentSong ? 'playing' : 'default'">"{{tt.name}}", {{tt.album}}</li>
+
                     </ul>
               
                 </td>
